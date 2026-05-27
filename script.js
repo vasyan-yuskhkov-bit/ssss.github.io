@@ -34,9 +34,9 @@ const questions = [
 
     answers:[
       "Падает с дерева",
-      "Прицепляется с травы или кустарника на одежду/обувь",
+      "Прицепляется с травы или кустарника",
       "Прыгает с земли",
-      "Заносится домашними животными"
+      "Заносится животными"
     ],
 
     correct:1
@@ -50,7 +50,7 @@ const questions = [
       "Залить маслом",
       "Аккуратно удалить и поместить в контейнер",
       "Прижечь йодом",
-      "Срочно принять антибиотик"
+      "Принять антибиотик"
     ],
 
     correct:1
@@ -76,7 +76,7 @@ const questions = [
 
     answers:[
       "Только покраснение",
-      "Высокая температура, головная боль, слабость",
+      "Высокая температура и головная боль",
       "Только зуд",
       "Насморк"
     ],
@@ -86,7 +86,7 @@ const questions = [
 
   {
     question:
-      "7. Существует ли прививка против энцефалита?",
+      "7. Есть ли прививка против энцефалита?",
 
     answers:[
       "Да, есть эффективные вакцины",
@@ -105,7 +105,7 @@ const questions = [
     answers:[
       "Только детям",
       "Только пенсионерам",
-      "Жителям эндемичных районов, туристам, лесникам",
+      "Жителям эндемичных районов",
       "Никому"
     ],
 
@@ -128,7 +128,7 @@ const questions = [
 
   {
     question:
-      "10. Что может назначить фельдшер ФАП для экстренной профилактики?",
+      "10. Что может назначить фельдшер ФАП?",
 
     answers:[
       "Компресс",
@@ -209,7 +209,7 @@ function loadQuestion(){
         `
           <div
             class="answer"
-            onclick="selectAnswer(${index}, this)"
+            data-index="${index}"
           >
             ${answer}
           </div>
@@ -220,29 +220,35 @@ function loadQuestion(){
     </div>
 
   `;
-}
 
-function selectAnswer(index, element){
+  const answerButtons =
+    document.querySelectorAll(".answer");
 
-  document
-    .querySelectorAll(".answer")
-    .forEach(answer => {
+  answerButtons.forEach(button=>{
 
-      answer.classList.remove(
-        "selected"
-      );
+    button.addEventListener("click",()=>{
+
+      answerButtons.forEach(btn=>{
+
+        btn.classList.remove("selected");
+
+      });
+
+      button.classList.add("selected");
+
+      selectedAnswer =
+        Number(button.dataset.index);
 
     });
 
-  element.classList.add("selected");
+  });
 
-  selectedAnswer = index;
 }
 
-nextBtn.addEventListener(
+nextBtn.addEventListener("click",
 
 
-k",()=>{
+)=>{
 
   if(selectedAnswer === null){
 
@@ -285,10 +291,7 @@ k",()=>{
 
     currentQuestion++;
 
-    if(
-      currentQuestion <
-      questions.length
-    ){
+    if(currentQuestion < questions.length){
 
       loadQuestion();
 
@@ -299,7 +302,7 @@ k",()=>{
       showResult();
     }
 
-  },1200);
+  },1000);
 
 });
 
@@ -318,16 +321,20 @@ function showResult(){
     level.innerText =
       "Низкий уровень знаний";
 
-  }else if(score <= 7){
+  }
+
+  else if(score <= 7){
 
     level.innerText =
       "Средний уровень знаний";
+  }
 
-  }else{
+  else{
 
     level.innerText =
       "Высокий уровень знаний";
   }
+
 }
 
 function restartQuiz(){
@@ -342,9 +349,9 @@ function restartQuiz(){
 
   quizCard.classList.remove("hidden");
 
-  loadQuestion();
-
   nextBtn.disabled = false;
+
+  loadQuestion();
 }
 
-loadQuestion();"clic
+loadQuestion();
