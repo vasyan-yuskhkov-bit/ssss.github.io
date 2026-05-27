@@ -1,237 +1,188 @@
 const questions = [
 
   {
-    question:
-      "1. Где обычно можно встретить иксодового клеща — переносчика вируса?",
-
-    answers:[
+    question: "1. Где обычно можно встретить иксодового клеща — переносчика вируса?",
+    answers: [
       "Только в густом еловом лесу",
       "В траве, кустарниках, на лесных тропах и опушках, в парках",
       "Только в болотистой местности",
       "В сухой степи без растительности"
     ],
-
-    correct:1
+    correct: 1
   },
 
   {
-    question:
-      "2. В какое время года риск укуса клеща наиболее высок?",
-
-    answers:[
+    question: "2. В какое время года риск укуса клеща наиболее высок?",
+    answers: [
       "Декабрь–февраль",
       "Апрель–июнь и август–сентябрь",
       "Только июль",
       "Круглый год одинаков"
     ],
-
-    correct:1
+    correct: 1
   },
 
   {
-    question:
-      "3. Как чаще всего клещ попадает на человека?",
-
-    answers:[
+    question: "3. Как чаще всего клещ попадает на человека?",
+    answers: [
       "Падает с дерева",
       "Прицепляется с травы или кустарника",
       "Прыгает с земли",
       "Заносится животными"
     ],
-
-    correct:1
+    correct: 1
   },
 
   {
-    question:
-      "4. Что нужно сделать после обнаружения клеща?",
-
-    answers:[
+    question: "4. Что нужно сделать после обнаружения клеща?",
+    answers: [
       "Залить маслом",
       "Аккуратно удалить и поместить в контейнер",
       "Прижечь йодом",
       "Принять антибиотик"
     ],
-
-    correct:1
+    correct: 1
   },
 
   {
-    question:
-      "5. Куда обращаться для исследования клеща?",
-
-    answers:[
+    question: "5. Куда обращаться для исследования клеща?",
+    answers: [
       "В магазин",
       "В лабораторию или инфекционную больницу",
       "В аптеку",
       "В ветеринарную клинику"
     ],
-
-    correct:1
+    correct: 1
   },
 
   {
-    question:
-      "6. Какие симптомы могут указывать на энцефалит?",
-
-    answers:[
+    question: "6. Какие симптомы могут указывать на энцефалит?",
+    answers: [
       "Только покраснение",
       "Высокая температура и головная боль",
       "Только зуд",
       "Насморк"
     ],
-
-    correct:1
+    correct: 1
   },
 
   {
-    question:
-      "7. Есть ли прививка против энцефалита?",
-
-    answers:[
+    question: "7. Существует ли прививка против энцефалита?",
+    answers: [
       "Да, есть эффективные вакцины",
       "Нет",
       "Не помогает",
       "Только народные средства"
     ],
-
-    correct:0
+    correct: 0
   },
 
   {
-    question:
-      "8. Кому рекомендуется вакцинация?",
-
-    answers:[
+    question: "8. Кому рекомендуется вакцинация?",
+    answers: [
       "Только детям",
       "Только пенсионерам",
       "Жителям эндемичных районов",
       "Никому"
     ],
-
-    correct:2
+    correct: 2
   },
 
   {
-    question:
-      "9. Какая защита снижает риск укуса?",
-
-    answers:[
+    question: "9. Какая защита снижает риск укуса?",
+    answers: [
       "Шорты и сандалии",
       "Закрытая одежда и репелленты",
       "Громкое пение",
       "Нательный крестик"
     ],
-
-    correct:1
+    correct: 1
   },
 
   {
-    question:
-      "10. Что может назначить фельдшер ФАП?",
-
-    answers:[
+    question: "10. Что может назначить фельдшер ФАП?",
+    answers: [
       "Компресс",
       "Горчичники",
       "Иммуноглобулин или противовирусные препараты",
       "Слабительные"
     ],
-
-    correct:2
+    correct: 2
   }
 
 ];
 
-const quiz =
-  document.getElementById("quiz");
-
-const nextBtn =
-  document.getElementById("nextBtn");
-
-const progressBar =
-  document.getElementById("progressBar");
-
-const questionNumber =
-  document.getElementById("questionNumber");
-
-const progressPercent =
-  document.getElementById("progressPercent");
-
-const resultCard =
-  document.getElementById("resultCard");
-
-const quizCard =
-  document.getElementById("quizCard");
-
-const scoreText =
-  document.getElementById("scoreText");
-
-const level =
-  document.getElementById("level");
+const quiz = document.getElementById("quiz");
+const nextBtn = document.getElementById("nextBtn");
+const progressBar = document.getElementById("progressBar");
+const questionNumber = document.getElementById("questionNumber");
+const progressPercent = document.getElementById("progressPercent");
+const resultCard = document.getElementById("resultCard");
+const quizCard = document.getElementById("quizCard");
+const scoreText = document.getElementById("scoreText");
+const level = document.getElementById("level");
 
 let currentQuestion = 0;
-
 let score = 0;
-
 let selectedAnswer = null;
 
-function loadQuestion(){
+function loadQuestion() {
 
   selectedAnswer = null;
 
-  const q =
-    questions[currentQuestion];
+  const q = questions[currentQuestion];
 
-  questionNumber.innerText =
-    `Вопрос ${currentQuestion + 1}
-    / ${questions.length}`;
+  questionNumber.textContent =
+    "Вопрос " +
+    (currentQuestion + 1) +
+    " / " +
+    questions.length;
 
   const progress =
-    ((currentQuestion + 1)
-    / questions.length) * 100;
+    ((currentQuestion + 1) / questions.length) * 100;
 
   progressBar.style.width =
     progress + "%";
 
-  progressPercent.innerText =
+  progressPercent.textContent =
     Math.round(progress) + "%";
 
-  quiz.innerHTML = `
+  let answersHTML = "";
 
+  q.answers.forEach((answer, index) => {
+
+    answersHTML +=
+    `
+      <div
+        class="answer"
+        data-index="${index}"
+      >
+        ${answer}
+      </div>
+    `;
+
+  });
+
+  quiz.innerHTML =
+  `
     <div class="question-title">
       ${q.question}
     </div>
 
     <div class="answers">
-
-      ${q.answers.map((answer,index)=>
-
-        `
-          <div
-            class="answer"
-            data-index="${index}"
-          >
-            ${answer}
-          </div>
-        `
-
-      ).join("")}
-
+      ${answersHTML}
     </div>
-
   `;
 
   const answerButtons =
     document.querySelectorAll(".answer");
 
-  answerButtons.forEach(button=>{
+  answerButtons.forEach(button => {
 
-    button.addEventListener("click",()=>{
+    button.addEventListener("click", () => {
 
-      answerButtons.forEach(btn=>{
-
+      answerButtons.forEach(btn => {
         btn.classList.remove("selected");
-
       });
 
       button.classList.add("selected");
@@ -245,14 +196,12 @@ function loadQuestion(){
 
 }
 
-nextBtn.addEventListener("click",
+nextBtn.addEventListener("click", () => {
+
+  if (selectedAnswer === null)
 
 
-)=>{
-
-  if(selectedAnswer === null){
-
-    alert("Выберите ответ");
+alert("Выберите ответ");
 
     return;
   }
@@ -263,81 +212,86 @@ nextBtn.addEventListener("click",
   const correctIndex =
     questions[currentQuestion].correct;
 
-  answers.forEach((answer,index)=>{
+  answers.forEach((answer, index) => {
 
-    if(index === correctIndex){
-
+    if (index === correctIndex) {
       answer.classList.add("correct");
     }
 
-    if(
+    if (
       index === selectedAnswer &&
       selectedAnswer !== correctIndex
-    ){
-
+    ) {
       answer.classList.add("wrong");
     }
 
   });
 
-  if(selectedAnswer === correctIndex){
-
+  if (selectedAnswer === correctIndex) {
     score++;
   }
 
   nextBtn.disabled = true;
 
-  setTimeout(()=>{
+  setTimeout(() => {
 
     currentQuestion++;
 
-    if(currentQuestion < questions.length){
+    if (
+      currentQuestion <
+      questions.length
+    ) {
 
       loadQuestion();
 
       nextBtn.disabled = false;
 
-    }else{
+    } else {
 
       showResult();
+
     }
 
-  },1000);
+  }, 1000);
 
 });
 
-function showResult(){
+function showResult() {
 
   quizCard.classList.add("hidden");
 
   resultCard.classList.remove("hidden");
 
-  scoreText.innerText =
-    `Ваш результат:
-    ${score} из ${questions.length}`;
+  scoreText.textContent =
+    "Ваш результат: " +
+    score +
+    " из " +
+    questions.length;
 
-  if(score <= 4){
+  if (score <= 4) {
 
-    level.innerText =
+    level.textContent =
       "Низкий уровень знаний";
 
   }
 
-  else if(score <= 7){
+  else if (score <= 7) {
 
-    level.innerText =
+    level.textContent =
       "Средний уровень знаний";
+
   }
 
-  else{
+  else {
 
-    level.innerText =
+    level.textContent =
       "Высокий уровень знаний";
+
   }
 
 }
 
-function restartQuiz(){
+function restartQuiz() {
 
   currentQuestion = 0;
 
@@ -352,6 +306,7 @@ function restartQuiz(){
   nextBtn.disabled = false;
 
   loadQuestion();
+
 }
 
-loadQuestion();
+loadQuestion();{
